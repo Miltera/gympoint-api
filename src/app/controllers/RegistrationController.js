@@ -22,8 +22,8 @@ class RegistrationController {
 
     const { student_id, plan_id, start_date } = req.body;
 
-    const studentExists = await Student.findByPk(student_id);
-    if (!studentExists) {
+    const student = await Student.findByPk(student_id);
+    if (!student) {
       return res.status(400).json({ error: 'Student not exists' });
     }
 
@@ -57,26 +57,13 @@ class RegistrationController {
       price: plan.price * plan.duration,
     });
 
-    const dataRegistration = await Registration.findByPk(registration.id, {
-      include: [
-        {
-          model: Student,
-          as: 'student',
-          attributes: ['name', 'email'],
-        },
-        {
-          model: Plan,
-          as: 'plan',
-          attributes: ['title', 'price'],
-        },
-      ],
-    });
-
     await Queue.add(RegistrationMail.key, {
-      dataRegistration,
+      student,
+      plan,
+      registration,
     });
 
-    return res.json(dataRegistration);
+    return res.json(registration);
   }
 
   async update(req, res) {
@@ -135,10 +122,12 @@ class RegistrationController {
       include: [
         {
           model: Student,
+          as: 'student',
           attributes: ['id', 'name', 'age'],
         },
         {
           model: Plan,
+          as: 'plan',
           attributes: ['title', 'duration'],
         },
       ],

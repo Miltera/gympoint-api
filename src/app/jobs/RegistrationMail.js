@@ -9,30 +9,30 @@ class RegistrationMail {
   }
 
   async handle({ data }) {
-    const { registration } = data;
+    const { student, plan, registration } = data;
 
     await Mail.sendMail({
-      to: `${registration.student.name} <${registration.student.email}>`,
+      to: `${student.name} <${student.email}>`,
       subject: 'Registro de Matricula - Gympoint',
       template: 'registration',
       context: {
-        student: registration.student.name,
-        planTitle: registration.plan.title,
+        student: student.name,
+        planTitle: plan.title,
         start_date: format(
           parseISO(registration.start_date),
-          "'dia' dd 'de' MMMM'",
+          "dd 'de' MMMM 'de' yyyy",
           {
             locale: pt,
           }
         ),
         end_date: format(
           parseISO(registration.end_date),
-          "'dia' dd 'de' MMMM'",
+          "dd 'de' MMMM 'de' yyyy",
           {
             locale: pt,
           }
         ),
-        price: registration.plan.price,
+        price: plan.price,
         totalPrice: registration.price,
       },
     });

@@ -1,11 +1,11 @@
-<strong>Olá, {{ student }}</strong>
+Olá, <strong>{{ student }}</strong>
 <p>Obrigado por matricular-se em nossa rede de academias, onde estaremos a disposição para atendê-lo e tirar todas suas duvidas.</p>
-<p>Abaixo você poderá conferir as informações sobre o seu plano a partir do dia:{{ start_date }}</p>
+<p>Abaixo você poderá conferir as informações sobre o seu plano que se inicia a partir do dia: {{ start_date }}</p>
 
 <p>
   <strong>Plano: </strong> {{ planTitle }} <br />
   <strong>Data de Término: </strong> {{ end_date }} <br />
-  <strong>Valor: </strong> {{totalPrice}}/(mensal: {{ price }} <br />
+  <strong>Valor: </strong> R$ {{totalPrice}} (valor mensal de: R$ {{ price }}) <br />
   <br />
   <small>
     Qualquer dúvida, nos envie uma mensagem pelo App Gympoint, ou se preferir, pelo e-mail: contato@gympoint.com.br
